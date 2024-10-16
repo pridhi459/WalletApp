@@ -2,6 +2,7 @@ package com.bootcamp.walletapp.controller;
 
 import com.bootcamp.walletapp.exception.InsufficientBalanceException;
 import com.bootcamp.walletapp.exception.UserNotFoundException;
+import com.bootcamp.walletapp.exception.WalletNotFoundException;
 import com.bootcamp.walletapp.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,13 @@ public class WalletController {
 
 
     //Localhost:8080/abc/deposit?amount=100
-    @PostMapping("/{userId}/deposit")
-    public ResponseEntity<?> deposit(@PathVariable Long userId, @RequestParam double amount) {
+    @PostMapping("/{walletId}/deposit")
+    public ResponseEntity<?> deposit(@PathVariable Long walletId, @RequestParam double amount) {
         try{
-            walletService.deposit(userId, amount);
+            walletService.deposit(walletId, amount);
             return ResponseEntity.ok("Deposit successful");}
-        catch (UserNotFoundException u){
-            return ResponseEntity.status(409).body("User does not exist: "+userId);
+        catch (WalletNotFoundException u){
+            return ResponseEntity.status(409).body("Wallet does not exist: "+walletId);
         }
         catch (Exception e){
             return ResponseEntity.status(500).body(e.getCause());
@@ -34,13 +35,13 @@ public class WalletController {
     }
 
     //Localhost:8080/abc/withdrawal?amount=100
-    @PostMapping("/{userId}/withdraw")
-    public ResponseEntity<?> withdrawal(@PathVariable Long userId, @RequestParam double amount) {
+    @PostMapping("/{walletId}/withdrawal")
+    public ResponseEntity<?> withdrawal(@PathVariable Long walletId, @RequestParam double amount) {
         try{
-            walletService.withdraw(userId, amount);
+            walletService.withdraw(walletId, amount);
             return ResponseEntity.ok("Withdrawal successful");}
-        catch (UserNotFoundException u){
-            return ResponseEntity.status(409).body("User does not exist: "+ userId);
+        catch (WalletNotFoundException u){
+            return ResponseEntity.status(409).body("Wallet does not exist: "+ walletId);
         }
         catch (InsufficientBalanceException e){
             return ResponseEntity.status(409).body("Insufficient balance");
@@ -50,13 +51,13 @@ public class WalletController {
         }
     }
 
-    @PostMapping("/{userId}/transfer")
-    public ResponseEntity<?> transfer(@PathVariable Long userId, @RequestParam double amount, @RequestParam Long toUserId){
+    @PostMapping("/{walletId}/transfer")
+    public ResponseEntity<?> transfer(@PathVariable Long walletId, @RequestParam double amount, @RequestParam Long toWalletId){
         try{
-            walletService.transfer(userId, amount, toUserId);
+            walletService.transfer(walletId, amount, toWalletId);
             return ResponseEntity.ok("Transfer successful");}
-        catch (UserNotFoundException u){
-            return ResponseEntity.status(409).body("User does not exist: "+ userId);
+        catch (WalletNotFoundException u){
+            return ResponseEntity.status(409).body("Wallet does not exist: "+ walletId);
         }
         catch (InsufficientBalanceException e){
             return ResponseEntity.status(409).body("Insufficient balance");

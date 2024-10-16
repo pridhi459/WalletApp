@@ -13,7 +13,9 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public List<Transaction> getTransactionHistory(Long userId) {
-        return transactionRepository.findByUser_UserId(userId);
+    public List<Transaction> getTransactionHistory(Long walletId) {
+        List <Transaction> transactions = transactionRepository.findByWallet_WalletId(walletId);
+        // transactionRepository.findByWallet_WalletId(walletId);
+        return transactions;
     }
 }
