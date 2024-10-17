@@ -27,26 +27,29 @@ public class WalletController {
             walletService.deposit(walletId, amount);
             return ResponseEntity.ok("Deposit successful");}
         catch (WalletNotFoundException u){
-            return ResponseEntity.status(409).body("Wallet does not exist: "+walletId);
+            return ResponseEntity.status(404).body("Wallet does not exist: "+walletId);
+        }
+        catch (InsufficientBalanceException e){
+            return ResponseEntity.status(400).body("Insufficient balance");
         }
         catch (Exception e){
             System.out.println(e+" abc "+e.getCause());
-            return ResponseEntity.status(500).body(e.getCause());
+            return ResponseEntity.status(500).body("Internal server error");
         }
     }
 
-    //Localhost:8080/abc/withdrawal?amount=100
+    //Localhost:8080/wallet/1/withdrawal?amount=100
     @PostMapping("/{walletId}/withdrawal")
     public ResponseEntity<?> withdrawal(@PathVariable Long walletId, @RequestParam double amount) {
         try{
             walletService.withdraw(walletId, amount);
             return ResponseEntity.ok("Withdrawal successful");}
         catch (WalletNotFoundException u){
-            return ResponseEntity.status(409).body("Wallet does not exist: "+ walletId);
+            return ResponseEntity.status(404).body("Wallet does not exist: "+ walletId);
         }
         catch (InsufficientBalanceException e){
 
-            return ResponseEntity.status(409).body("Insufficient balance");
+            return ResponseEntity.status(400).body("Insufficient balance");
         }
         catch (Exception e){
             System.out.println(e+" abc "+e.getCause());

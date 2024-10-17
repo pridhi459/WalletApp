@@ -32,8 +32,8 @@ public class TransactionController {
         }
         catch(UserNotFoundException e){
             return ResponseEntity.status(404).body(null);
-                    //ResponseEntity.status(409).body("User does not exists");
         }
+
         catch (Exception e){
             System.out.println(e);
             return ResponseEntity.status(500).body(null);
