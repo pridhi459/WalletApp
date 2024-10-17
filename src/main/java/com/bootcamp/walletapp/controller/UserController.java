@@ -21,13 +21,13 @@ public class UserController {
     private UserService userService;
 
     //Localhost:8080/
-    @GetMapping("/")
+    @GetMapping()
     public String home(){
         return "Welcome to Wallet App";
     }
 
-    //Localhost:8080/register?username=abc&password=123
-    @PostMapping("/register")
+    //Localhost:8080/user?username=abc&password=123
+    @PostMapping()
     public ResponseEntity<?> newUser(@RequestParam String username,@RequestParam String password){
         try{
         User newuser = userService.register(username,password);

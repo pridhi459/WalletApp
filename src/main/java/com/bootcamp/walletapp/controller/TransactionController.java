@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/transactions")
 public class TransactionController {
     //Localhost:8080/transaction/history
 
@@ -20,7 +20,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
 
-    @GetMapping("/history")
+    @GetMapping()
     public ResponseEntity<List<TransactionResponse>> getTransactionHistory(@RequestParam Long walletId) {
         try{
             List<TransactionResponse> transactions= new ArrayList<>();
@@ -31,7 +31,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
         }
         catch(UserNotFoundException e){
-            return ResponseEntity.status(409).body(null);
+            return ResponseEntity.status(404).body(null);
                     //ResponseEntity.status(409).body("User does not exists");
         }
         catch (Exception e){

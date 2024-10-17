@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -41,15 +42,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/user").permitAll()
+                        .requestMatchers("/v3/*").permitAll()
+                        .requestMatchers("/swagger-ui/*").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(withDefaults());
         return http.build();
     }
 
     @Bean
-    public AuthenticationManagerBuilder authenticationManagerBuilder(UserDetailsService userDetailsService) throws Exception {
-        AuthenticationManagerBuilder auth = new AuthenticationManagerBuilder(null);
-        auth.userDetailsService(userDetailsService);
-        return auth;
+    public NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
+
+//    @Bean
+//    public AuthenticationManagerBuilder authenticationManagerBuilder(UserDetailsService userDetailsService) throws Exception {
+//        AuthenticationManagerBuilder auth = new AuthenticationManagerBuilder(null);
+//        auth.userDetailsService(userDetailsService);
+//        return auth;
+//    }
 }
