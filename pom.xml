@@ -88,7 +88,14 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.1.0</version> <!-- or check for the latest -->
         </dependency>
-
+        <!-- -&#45;&#45;&#45;&#45;&#45;&#45;-->
+        <!--liquibase-->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.15.0</version> <!-- Check for the latest version -->
+        </dependency>
+        <!--        -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 
     </dependencies>
     <repositories>

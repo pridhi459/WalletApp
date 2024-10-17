@@ -1,7 +1,9 @@
 package com.bootcamp.walletapp.service;
 
+import com.bootcamp.walletapp.exception.WalletNotFoundException;
 import com.bootcamp.walletapp.repository.TransactionRepository;
 import com.bootcamp.walletapp.repository.UserRepository;
+import com.bootcamp.walletapp.repository.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +17,9 @@ class TransactionServiceTest {
 
 
     @Mock
+    WalletRepository walletRepository;
+
+    @Mock
     private TransactionRepository transactionRepository;
 
     @InjectMocks
@@ -22,12 +27,12 @@ class TransactionServiceTest {
 
     @Test
     void testGetTransactionHistory() {
-        assertNotNull(transactionService.getTransactionHistory(1L));
+        assertNotNull(transactionService.getTransactionHistory(2L));
     }
 
     @Test
     void testGetTransactionHistoryForInvalidWalletId() {
-        assertNull(transactionService.getTransactionHistory(0L));
+        assertThrows(WalletNotFoundException.class, () -> transactionService.getTransactionHistory(0L));
     }
 
 }
