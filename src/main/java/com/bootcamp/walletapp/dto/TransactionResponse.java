@@ -19,9 +19,15 @@ public class TransactionResponse {
 
 
     public TransactionResponse(@NotNull Transaction transaction) {
+        if(transaction.getWallet()==null){
+            this.fromUsername="Self";
+        }
+        else {
+            this.fromUsername = transaction.getWallet().getUser().getUsername();
+        }
         this.amount = transaction.getAmount();
         this.transactionType = transaction.getTransactionType();
-        this.fromUsername = transaction.getWallet().getUser().getUsername();
+
         this.toUsername = transaction.getTargetWallet().getUser().getUsername();
         this.CreatedAt = transaction.getCreatedAt();
     }

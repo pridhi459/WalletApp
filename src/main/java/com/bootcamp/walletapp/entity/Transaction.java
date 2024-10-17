@@ -35,7 +35,7 @@ public class Transaction {
 
     @ManyToOne()
     @JoinColumn(name = "wallet_id", referencedColumnName = "wallet_id")
-    private Wallet wallet;
+    private Wallet wallet=null;
 
     @ManyToOne()
     @JoinColumn(name = "target_walletId", nullable = false, referencedColumnName = "wallet_id")
@@ -50,6 +50,14 @@ public class Transaction {
         this.amount = amount;
         this.transactionType = transactionType;
         this.wallet = wallet;
+        this.targetWallet = targetWallet;
+    }
+
+    public Transaction(double amount, TransactionType transactionType, Wallet targetWallet) {
+
+        this.curr_Type=targetWallet.getCurr_Type();
+        this.amount = amount;
+        this.transactionType = transactionType;
         this.targetWallet = targetWallet;
     }
 }

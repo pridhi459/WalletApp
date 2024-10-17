@@ -44,7 +44,7 @@ public class Wallet {
             throw new IllegalArgumentException("Amount cannot be Less than Zero");
         }
         this.balance += amount;
-        transactions.add(new Transaction(amount, TransactionType.DEPOSIT, this, this));
+        transactions.add(new Transaction(amount, TransactionType.DEPOSIT, this));
         return this.balance;
     }
 
@@ -57,7 +57,7 @@ public class Wallet {
             throw new InsufficientBalanceException("Insufficient Balance");
         }
         this.balance -= amount;
-        transactions.add(new Transaction(amount, TransactionType.WITHDRAW, this, this));
+        transactions.add(new Transaction(amount, TransactionType.WITHDRAW,this));
         return amount;
     }
 

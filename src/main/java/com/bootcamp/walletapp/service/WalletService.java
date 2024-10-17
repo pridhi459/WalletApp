@@ -19,7 +19,6 @@ public class WalletService {
 
     public double deposit(long walletId, double amount) {
         double newBalance=0;
-        try{
         Wallet wallet = walletRepository.findByWalletId(walletId);
 
         if (wallet == null) {
@@ -29,16 +28,12 @@ public class WalletService {
         newBalance = wallet.deposit(amount);
         walletRepository.save(wallet);
         recordTransaction(wallet);
-        }
-        catch (Exception e){
-            System.out.println(e.getCause()+" "+e.getMessage());
-        }
+
         return newBalance;
     }
 
     public double withdraw(Long walletId, double amount) {
         double drawnAmount=0;
-        try{
         Wallet wallet = walletRepository.findByWalletId(walletId);
 
         if (wallet == null) {
@@ -48,10 +43,7 @@ public class WalletService {
          drawnAmount = wallet.withdraw(amount);
         walletRepository.save(wallet);
         recordTransaction(wallet);
-            }
-        catch (Exception e){
-            System.out.println(e);
-        }
+
         return drawnAmount;
     }
 

@@ -30,6 +30,7 @@ public class WalletController {
             return ResponseEntity.status(409).body("Wallet does not exist: "+walletId);
         }
         catch (Exception e){
+            System.out.println(e+" abc "+e.getCause());
             return ResponseEntity.status(500).body(e.getCause());
         }
     }
@@ -44,9 +45,11 @@ public class WalletController {
             return ResponseEntity.status(409).body("Wallet does not exist: "+ walletId);
         }
         catch (InsufficientBalanceException e){
+
             return ResponseEntity.status(409).body("Insufficient balance");
         }
         catch (Exception e){
+            System.out.println(e+" abc "+e.getCause());
             return ResponseEntity.status(500).body(e.getCause());
         }
     }

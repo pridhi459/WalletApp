@@ -23,6 +23,8 @@ public class TransactionService {
             throw new WalletNotFoundException("Wallet does not exist");
         }
         List <Transaction> transactions = transactionRepository.findByWallet_WalletId(walletId);
+
+        transactions.addAll(transactionRepository.findByTargetWallet_WalletId(walletId));
         // transactionRepository.findByWallet_WalletId(walletId);
         return transactions;
     }
